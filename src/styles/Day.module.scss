@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.Day {
+  width: 100%;
+  padding: 1rem;
+  background-color: rgba($color: #000, $alpha: 0.1) !important;
+
+  &ActivityList {
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}

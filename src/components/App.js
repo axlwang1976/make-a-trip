@@ -1,7 +1,12 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import Trip from './Trip';
 
-function App() {
-  return <div className="App">App</div>;
+export default function App() {
+  return (
+    <Switch>
+      {/* <Route exact path="/" render={TripList} /> */}
+      <Route exact path="/trip/:id" render={Trip} />
+    </Switch>
+  );
 }
-
-export default App;
