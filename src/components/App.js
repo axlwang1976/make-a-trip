@@ -7,7 +7,7 @@ const initData = [
   {
     id: 1,
     title: '測試標題',
-    trip: [
+    days: [
       {
         day: 1,
         detail: [
@@ -34,9 +34,7 @@ export default function App() {
       <Route
         exact
         path="/trip/:id"
-        render={routeProps => (
-          <Trip trip={findTrip(routeProps.match.params.id)} />
-        )}
+        render={() => <Trip trip={findTrip(1)} />}
       />
     </Switch>
   );
