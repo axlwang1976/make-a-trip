@@ -1,0 +1,23 @@
+.MiniTrip {
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 0.5rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &Title {
+    text-align: center;
+  }
+
+  &Img {
+    width: 100%;
+    text-align: center;
+
+    & img {
+      max-width: 100%;
+      border-radius: 5px;
+    }
+  }
+}

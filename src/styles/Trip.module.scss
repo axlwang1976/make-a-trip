@@ -2,10 +2,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-decoration: none;
 }
 
 .Trip {
   padding-bottom: 2rem;
+
+  &Toolbar {
+    display: flex;
+    justify-content: space-between;
+  }
 
   &Header {
     margin-bottom: 2rem;

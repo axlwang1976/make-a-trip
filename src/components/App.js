@@ -2,55 +2,17 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import TripList from './TripList';
 import Trip from './Trip';
-
-const initData = [
-  {
-    id: 1,
-    title: '測試資料標題',
-    days: [
-      {
-        day: 1,
-        detail: [
-          {
-            time: '上午',
-            description: '早餐',
-            imgSrc:
-              'https://images.unsplash.com/photo-1560970750-2461e3224fdc?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixlib=rb-1.2.1&q=80&w=300',
-          },
-          {
-            time: '下午',
-            description: '午餐',
-            imgSrc:
-              'https://images.unsplash.com/photo-1560970750-2461e3224fdc?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixlib=rb-1.2.1&q=80&w=300',
-          },
-        ],
-      },
-      {
-        day: 2,
-        detail: [
-          {
-            time: '上午',
-            description: '早餐',
-            imgSrc:
-              'https://images.unsplash.com/photo-1560970750-2461e3224fdc?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixlib=rb-1.2.1&q=80&w=300',
-          },
-          {
-            time: '下午',
-            description: '午餐',
-            imgSrc:
-              'https://images.unsplash.com/photo-1560970750-2461e3224fdc?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixlib=rb-1.2.1&q=80&w=300',
-          },
-        ],
-      },
-    ],
-  },
-];
+import initData from '../initData';
 
 export default function App() {
   const findTrip = id => initData.find(trip => trip.id === id);
   return (
     <Switch>
-      <Route exact path="/" render={() => <TripList />} />
+      <Route
+        exact
+        path="/"
+        render={routeProps => <TripList trips={initData} {...routeProps} />}
+      />
       <Route
         exact
         path="/trip/:id"
