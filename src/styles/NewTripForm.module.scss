@@ -1,0 +1,18 @@
+.Form {
+  width: 300px;
+  text-align: center;
+  margin-top: 1rem;
+
+  & .button {
+    margin-top: 1rem;
+
+    & button {
+      width: 200px;
+    }
+  }
+
+  & .time {
+    width: 200px;
+    margin: 1rem 0 0.5rem;
+  }
+}

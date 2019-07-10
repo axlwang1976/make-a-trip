@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import MiniTrip from './MiniTrip';
 import styles from '../styles/TripList.module.scss';
 
@@ -10,9 +12,10 @@ export default function TripList({ trips, history }) {
     <div className={styles.TripList}>
       <div className={styles.container}>
         <nav className={styles.nav}>
-          <Typography variant="h2" gutterBottom>
-            MAKE-A-TRIP
-          </Typography>
+          <Typography variant="h2">MAKE-A-TRIP</Typography>
+          <Button variant="contained">
+            <Link to="/trip/new">Create Trip</Link>
+          </Button>
         </nav>
         <div className={styles.trips}>
           {trips.map(trip => (
