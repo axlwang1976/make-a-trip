@@ -1,0 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.Trip {
+  padding-bottom: 2rem;
+
+  &Header {
+    margin-bottom: 2rem;
+  }
+}
