@@ -1,6 +1,6 @@
 export default [
   {
-    id: 1,
+    id: '1',
     title: '測試資料標題',
     coverImg:
       'https://images.unsplash.com/photo-1560970750-2461e3224fdc?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixlib=rb-1.2.1&q=80&w=300',
@@ -42,7 +42,7 @@ export default [
     ],
   },
   {
-    id: 2,
+    id: '2',
     title: '測試資料標題2',
     coverImg:
       'https://images.unsplash.com/photo-1560970750-2461e3224fdc?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixlib=rb-1.2.1&q=80&w=300',

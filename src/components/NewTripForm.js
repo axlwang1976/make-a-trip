@@ -111,7 +111,13 @@ export default class NewTripForm extends Component {
           <Select
             value={time}
             onChange={this.handleChange}
-            input={<OutlinedInput name="time" id="outlined-time-simple" />}
+            input={
+              <OutlinedInput
+                labelWidth={40}
+                name="time"
+                id="outlined-time-simple"
+              />
+            }
           >
             <MenuItem value="Morning">Morning</MenuItem>
             <MenuItem value="Afternoon">Afternoon</MenuItem>

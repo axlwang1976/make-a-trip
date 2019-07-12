@@ -18,7 +18,9 @@ export default function App() {
       <Route
         exact
         path="/trip/:id"
-        render={() => <Trip trip={findTrip(1)} />}
+        render={routeProps => (
+          <Trip trip={findTrip(routeProps.match.params.id)} />
+        )}
       />
     </Switch>
   );
