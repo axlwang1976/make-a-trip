@@ -12,7 +12,6 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import uuid from 'uuid';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
@@ -24,7 +23,7 @@ import actStyles from '../styles/Trip.module.scss';
 class NewTrip extends Component {
   state = {
     open: true,
-    // title: '',
+    title: '',
     // coverKeyword: '',
     time: '',
     description: '',
@@ -32,6 +31,13 @@ class NewTrip extends Component {
     activities: [],
     // trips: [],
   };
+
+  componentDidMount() {
+    const { trips } = this.props;
+    ValidatorForm.addValidationRule('isTitleUnique', value =>
+      trips.every(({ title }) => title.toLowerCase() !== value.toLowerCase())
+    );
+  }
 
   handleDrawerOpen = () => this.setState({ open: true });
 
@@ -69,11 +75,25 @@ class NewTrip extends Component {
     // await this.setTrips();
   };
 
+  handleSave = () => {
+    const { saveTrip, history } = this.props;
+    const { activities, title } = this.state;
+    const newTripName = title;
+    const newTrip = {
+      id: newTripName.toLowerCase().replace(/ /g, '-'),
+      title: newTripName,
+      coverImg: `https://source.unsplash.com/300x300/?${title}`,
+      activities,
+    };
+    saveTrip(newTrip);
+    history.push('/');
+  };
+
   render() {
     const { classes, theme } = this.props;
     const {
       open,
-      // title,
+      title,
       // coverKeyword,
       time,
       description,
@@ -103,6 +123,22 @@ class NewTrip extends Component {
             <Typography variant="h6" noWrap>
               Create New Trip
             </Typography>
+            <ValidatorForm autoComplete="off" onSubmit={this.handleSave}>
+              <TextValidator
+                id="outlined-title"
+                label="Trip Title"
+                name="title"
+                value={title}
+                onChange={this.handleChange}
+                margin="normal"
+                variant="outlined"
+                validators={['required', 'isTitleUnique']}
+                errorMessages={['this field is required', 'Title already used']}
+              />
+              <Button variant="contained" color="secondary" type="submit">
+                Save
+              </Button>
+            </ValidatorForm>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -198,4 +234,7 @@ export default withStyles(styles, { withTheme: true })(NewTrip);
 NewTrip.propTypes = {
   classes: PropTypes.object,
   theme: PropTypes.object,
+  saveTrip: PropTypes.func,
+  history: PropTypes.object,
+  trips: PropTypes.array,
 };
