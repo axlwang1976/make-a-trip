@@ -17,3 +17,16 @@
     margin-bottom: 2rem;
   }
 }
+
+.Day {
+  width: 95%;
+  padding: 1rem;
+  background-color: rgba($color: #000, $alpha: 0.1) !important;
+  margin: 0 auto 1rem;
+
+  &ActivityList {
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}

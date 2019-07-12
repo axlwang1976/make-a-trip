@@ -5,7 +5,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Day from './Day';
+import Paper from '@material-ui/core/Paper';
+import Activity from './Activity';
 import styles from '../styles/Trip.module.scss';
 
 export default function Trip(props) {
@@ -22,7 +23,13 @@ export default function Trip(props) {
           </Button>
         </Toolbar>
       </AppBar>
-      <Day {...props} />
+      <Paper className={styles.Day}>
+        <div className={styles.DayActivityList}>
+          {trip.activities.map((activity, i) => (
+            <Activity {...activity} key={i} />
+          ))}
+        </div>
+      </Paper>
     </div>
   );
 }

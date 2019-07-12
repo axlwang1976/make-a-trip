@@ -18,7 +18,7 @@ export default function MiniTrip({ id, title, coverImg, goToTrip }) {
 }
 
 MiniTrip.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   title: PropTypes.string,
   coverImg: PropTypes.string,
   goToTrip: PropTypes.func,
