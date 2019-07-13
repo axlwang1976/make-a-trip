@@ -3,16 +3,11 @@ import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { SortableElement } from 'react-sortable-hoc';
 import styles from '../styles/Activity.module.scss';
 
-export default function DraggableActivity({
-  activityId,
-  time,
-  description,
-  imgSrc,
-  deleteActivity,
-}) {
-  return (
+const DraggableActivity = SortableElement(
+  ({ activityId, time, description, imgSrc, deleteActivity }) => (
     <Paper className={styles.Activity}>
       <Typography variant="h5" gutterBottom>
         {time}
@@ -28,8 +23,8 @@ export default function DraggableActivity({
         onClick={() => deleteActivity(activityId)}
       />
     </Paper>
-  );
-}
+  )
+);
 
 DraggableActivity.propTypes = {
   activityId: PropTypes.string,
@@ -38,3 +33,5 @@ DraggableActivity.propTypes = {
   imgSrc: PropTypes.string,
   deleteActivity: PropTypes.func,
 };
+
+export default DraggableActivity;

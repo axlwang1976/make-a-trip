@@ -16,7 +16,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import DraggableActivity from './DraggableActivity';
+import arrayMove from 'array-move';
+import DraggableActivityList from './DraggableActivityList';
 import { styles } from '../styles/NewTripStyles';
 import formStyles from '../styles/NewTripForm.module.scss';
 import actStyles from '../styles/Trip.module.scss';
@@ -97,6 +98,12 @@ class NewTrip extends Component {
       activity => activity.activityId !== id
     );
     this.setState({ activities: newActivities });
+  };
+
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    this.setState(({ activities }) => ({
+      activities: arrayMove(activities, oldIndex, newIndex),
+    }));
   };
 
   render() {
@@ -225,13 +232,12 @@ class NewTrip extends Component {
           <Paper className={actStyles.Day}>
             <div className={actStyles.DayActivityList}>
               {activities.length > 0 ? (
-                activities.map((activity, i) => (
-                  <DraggableActivity
-                    {...activity}
-                    key={i}
-                    deleteActivity={this.deleteActivity}
-                  />
-                ))
+                <DraggableActivityList
+                  activities={activities}
+                  deleteActivity={this.deleteActivity}
+                  axis="xy"
+                  onSortEnd={this.onSortEnd}
+                />
               ) : (
                 <Typography variant="h4">Add something...</Typography>
               )}
@@ -243,8 +249,6 @@ class NewTrip extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(NewTrip);
-
 NewTrip.propTypes = {
   classes: PropTypes.object,
   theme: PropTypes.object,
@@ -252,3 +256,5 @@ NewTrip.propTypes = {
   history: PropTypes.object,
   trips: PropTypes.array,
 };
+
+export default withStyles(styles, { withTheme: true })(NewTrip);
