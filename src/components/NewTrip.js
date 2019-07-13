@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'uuid';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,7 +16,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import Activity from './Activity';
+import DraggableActivity from './DraggableActivity';
 import { styles } from '../styles/NewTripStyles';
 import formStyles from '../styles/NewTripForm.module.scss';
 import actStyles from '../styles/Trip.module.scss';
@@ -63,6 +64,7 @@ class NewTrip extends Component {
       activities: [
         ...activities,
         {
+          activityId: uuid(),
           time,
           description,
           imgSrc: `https://source.unsplash.com/300x300/?${actKeyword}`,
@@ -87,6 +89,14 @@ class NewTrip extends Component {
     };
     saveTrip(newTrip);
     history.push('/');
+  };
+
+  deleteActivity = id => {
+    const { activities } = this.state;
+    const newActivities = activities.filter(
+      activity => activity.activityId !== id
+    );
+    this.setState({ activities: newActivities });
   };
 
   render() {
@@ -216,7 +226,11 @@ class NewTrip extends Component {
             <div className={actStyles.DayActivityList}>
               {activities.length > 0 ? (
                 activities.map((activity, i) => (
-                  <Activity {...activity} key={i} />
+                  <DraggableActivity
+                    {...activity}
+                    key={i}
+                    deleteActivity={this.deleteActivity}
+                  />
                 ))
               ) : (
                 <Typography variant="h4">Add something...</Typography>

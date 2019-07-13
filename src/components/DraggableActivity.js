@@ -2,9 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import DeleteIcon from '@material-ui/icons/Delete';
 import styles from '../styles/Activity.module.scss';
 
-export default function Activity({ time, description, imgSrc }) {
+export default function DraggableActivity({
+  activityId,
+  time,
+  description,
+  imgSrc,
+  deleteActivity,
+}) {
   return (
     <Paper className={styles.Activity}>
       <Typography variant="h5" gutterBottom>
@@ -16,12 +23,18 @@ export default function Activity({ time, description, imgSrc }) {
       <div className={styles.ActivityImg}>
         <img src={imgSrc} alt="img" />
       </div>
+      <DeleteIcon
+        className={styles.deleteIcon}
+        onClick={() => deleteActivity(activityId)}
+      />
     </Paper>
   );
 }
 
-Activity.propTypes = {
+DraggableActivity.propTypes = {
+  activityId: PropTypes.string,
   time: PropTypes.string,
   description: PropTypes.string,
   imgSrc: PropTypes.string,
+  deleteActivity: PropTypes.func,
 };

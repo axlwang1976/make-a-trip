@@ -3,12 +3,27 @@
   // height: 15rem;
   background-color: #fff;
   padding: 0.5rem;
+  position: relative;
 
   &Img {
     width: 100%;
 
     & img {
       max-width: 100%;
+    }
+  }
+
+  & .deleteIcon {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    color: #111;
+    font-size: 2rem;
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.3);
     }
   }
 }
