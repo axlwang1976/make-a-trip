@@ -8,7 +8,7 @@ import styles from '../styles/Activity.module.scss';
 
 const DraggableActivity = SortableElement(
   ({ activityId, time, description, imgSrc, deleteActivity }) => (
-    <Paper className={styles.Activity}>
+    <Paper className={`${styles.Activity} ${styles.DraggableActivity}`}>
       <Typography variant="h5" gutterBottom>
         {time}
       </Typography>
