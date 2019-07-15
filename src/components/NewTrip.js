@@ -9,65 +9,23 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import arrayMove from 'array-move';
 import NewTripNav from './NewTripNav';
+import ActivityForm from './ActivityForm';
 import DraggableActivityList from './DraggableActivityList';
 import { styles } from '../styles/NewTripStyles';
-import formStyles from '../styles/NewTripForm.module.scss';
-import actStyles from '../styles/Trip.module.scss';
 
 class NewTrip extends Component {
   state = {
     open: true,
-    // coverKeyword: '',
-    time: '',
-    description: '',
-    actKeyword: '',
     activities: [],
-    // trips: [],
   };
 
   handleDrawerOpen = () => this.setState({ open: true });
 
   handleDrawerClose = () => this.setState({ open: false });
 
-  handleChange = e => this.setState({ [e.target.name]: e.target.value });
-
-  // setTrips = () => {
-  //   const { title, coverKeyword, days, trips } = this.state;
-  //   const trip = {
-  //     id: uuid(),
-  //     title,
-  //     coverImg: `https://source.unsplash.com/300x300/?${coverKeyword}`,
-  //     days,
-  //   };
-  //   this.setState({ trips: [...trips, trip] });
-  // };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    const { time, description, actKeyword, activities } = this.state;
-    this.setState({
-      activities: [
-        ...activities,
-        {
-          activityId: uuid(),
-          time,
-          description,
-          imgSrc: `https://source.unsplash.com/300x300/?${actKeyword}`,
-        },
-      ],
-      time: '',
-      description: '',
-      actKeyword: '',
-    });
-    // await this.setTrips();
-  };
-
-  handleSave = title => {
+  saveTrip = title => {
     const { saveTrip, history } = this.props;
     const { activities } = this.state;
     const newTripName = title;
@@ -79,6 +37,21 @@ class NewTrip extends Component {
     };
     saveTrip(newTrip);
     history.push('/');
+  };
+
+  addActivity = (time, description, actKeyword) => {
+    const { activities } = this.state;
+    this.setState({
+      activities: [
+        ...activities,
+        {
+          activityId: uuid(),
+          time,
+          description,
+          imgSrc: `https://source.unsplash.com/300x300/?${actKeyword}`,
+        },
+      ],
+    });
   };
 
   deleteActivity = id => {
@@ -97,15 +70,7 @@ class NewTrip extends Component {
 
   render() {
     const { classes, theme, trips } = this.props;
-    const {
-      open,
-      // coverKeyword,
-      time,
-      description,
-      actKeyword,
-      activities,
-      // trips,
-    } = this.state;
+    const { open, activities } = this.state;
     return (
       <div className={classes.root}>
         <NewTripNav
@@ -113,7 +78,7 @@ class NewTrip extends Component {
           classes={classes}
           trips={trips}
           handleDrawerOpen={this.handleDrawerOpen}
-          handleSave={this.handleSave}
+          saveTrip={this.saveTrip}
         />
         <Drawer
           className={classes.drawer}
@@ -134,51 +99,7 @@ class NewTrip extends Component {
             </IconButton>
           </div>
           <Divider />
-          <ValidatorForm
-            autoComplete="off"
-            className={formStyles.Form}
-            onSubmit={this.handleSubmit}
-          >
-            <Typography variant="h6">Add Your Activity</Typography>
-            <TextValidator
-              id="outlined-time"
-              label="Activity Time"
-              name="time"
-              value={time}
-              onChange={this.handleChange}
-              margin="normal"
-              variant="outlined"
-              validators={['required']}
-              errorMessages={['this field is required']}
-            />
-            <TextValidator
-              id="outlined-description"
-              label="Activity Description"
-              name="description"
-              value={description}
-              onChange={this.handleChange}
-              margin="normal"
-              variant="outlined"
-              validators={['required']}
-              errorMessages={['this field is required']}
-            />
-            <TextValidator
-              id="outlined-actKeyword"
-              label="Activity Image Keyword"
-              name="actKeyword"
-              value={actKeyword}
-              onChange={this.handleChange}
-              margin="normal"
-              variant="outlined"
-              validators={['required']}
-              errorMessages={['this field is required']}
-            />
-            <div className={formStyles.button}>
-              <Button type="submit" variant="contained" color="primary">
-                Add
-              </Button>
-            </div>
-          </ValidatorForm>
+          <ActivityForm addActivity={this.addActivity} />
         </Drawer>
         <main
           className={classNames(classes.content, {
@@ -186,20 +107,16 @@ class NewTrip extends Component {
           })}
         >
           <div className={classes.drawerHeader} />
-          <Paper className={actStyles.Day}>
-            <div className={actStyles.DayActivityList}>
-              {activities.length > 0 ? (
-                <DraggableActivityList
-                  activities={activities}
-                  deleteActivity={this.deleteActivity}
-                  axis="xy"
-                  onSortEnd={this.onSortEnd}
-                />
-              ) : (
-                <Typography variant="h4">Add something...</Typography>
-              )}
-            </div>
-          </Paper>
+          {activities.length > 0 ? (
+            <DraggableActivityList
+              activities={activities}
+              deleteActivity={this.deleteActivity}
+              axis="xy"
+              onSortEnd={this.onSortEnd}
+            />
+          ) : (
+            <Typography variant="h4">Add something...</Typography>
+          )}
         </main>
       </div>
     );

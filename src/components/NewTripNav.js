@@ -24,7 +24,7 @@ class NewTripNav extends Component {
   handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
-    const { classes, open, handleDrawerOpen, handleSave } = this.props;
+    const { classes, open, handleDrawerOpen, saveTrip } = this.props;
     const { title } = this.state;
     return (
       <>
@@ -48,10 +48,7 @@ class NewTripNav extends Component {
             <Typography variant="h6" noWrap>
               Create New Trip
             </Typography>
-            <ValidatorForm
-              autoComplete="off"
-              onSubmit={() => handleSave(title)}
-            >
+            <ValidatorForm autoComplete="off" onSubmit={() => saveTrip(title)}>
               <TextValidator
                 id="outlined-title"
                 label="Trip Title"
@@ -82,7 +79,7 @@ NewTripNav.propTypes = {
   open: PropTypes.bool,
   trips: PropTypes.array,
   handleDrawerOpen: PropTypes.func,
-  handleSave: PropTypes.func,
+  saveTrip: PropTypes.func,
 };
 
 export default NewTripNav;
