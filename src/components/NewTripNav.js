@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import styles from '../styles/NewTripNav.module.scss';
 
 class NewTripNav extends Component {
   state = { title: '' };
@@ -24,10 +25,10 @@ class NewTripNav extends Component {
   handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
-    const { classes, open, handleDrawerOpen, saveTrip } = this.props;
+    const { classes, open, handleDrawerOpen, handleSave } = this.props;
     const { title } = this.state;
     return (
-      <>
+      <div className={styles.root}>
         <CssBaseline />
         <AppBar
           position="fixed"
@@ -48,7 +49,12 @@ class NewTripNav extends Component {
             <Typography variant="h6" noWrap>
               Create New Trip
             </Typography>
-            <ValidatorForm autoComplete="off" onSubmit={() => saveTrip(title)}>
+          </Toolbar>
+          <div className={styles.navBtns}>
+            <ValidatorForm
+              autoComplete="off"
+              onSubmit={() => handleSave(title)}
+            >
               <TextValidator
                 id="outlined-title"
                 label="Trip Title"
@@ -60,16 +66,16 @@ class NewTripNav extends Component {
                 validators={['required', 'isTitleUnique']}
                 errorMessages={['this field is required', 'Title already used']}
               />
-              <Button variant="contained">
-                <Link to="/">Back</Link>
-              </Button>
               <Button variant="contained" color="secondary" type="submit">
                 Save
               </Button>
             </ValidatorForm>
-          </Toolbar>
+            <Button variant="contained">
+              <Link to="/">Back</Link>
+            </Button>
+          </div>
         </AppBar>
-      </>
+      </div>
     );
   }
 }
@@ -79,7 +85,7 @@ NewTripNav.propTypes = {
   open: PropTypes.bool,
   trips: PropTypes.array,
   handleDrawerOpen: PropTypes.func,
-  saveTrip: PropTypes.func,
+  handleSave: PropTypes.func,
 };
 
 export default NewTripNav;

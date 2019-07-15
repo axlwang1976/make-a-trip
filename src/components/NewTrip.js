@@ -25,7 +25,7 @@ class NewTrip extends Component {
 
   handleDrawerClose = () => this.setState({ open: false });
 
-  saveTrip = title => {
+  handleSave = title => {
     const { saveTrip, history } = this.props;
     const { activities } = this.state;
     const newTripName = title;
@@ -78,7 +78,7 @@ class NewTrip extends Component {
           classes={classes}
           trips={trips}
           handleDrawerOpen={this.handleDrawerOpen}
-          saveTrip={this.saveTrip}
+          handleSave={this.handleSave}
         />
         <Drawer
           className={classes.drawer}
