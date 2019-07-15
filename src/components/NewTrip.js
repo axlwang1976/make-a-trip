@@ -4,19 +4,16 @@ import uuid from 'uuid';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import arrayMove from 'array-move';
+import NewTripNav from './NewTripNav';
 import DraggableActivityList from './DraggableActivityList';
 import { styles } from '../styles/NewTripStyles';
 import formStyles from '../styles/NewTripForm.module.scss';
@@ -25,7 +22,6 @@ import actStyles from '../styles/Trip.module.scss';
 class NewTrip extends Component {
   state = {
     open: true,
-    title: '',
     // coverKeyword: '',
     time: '',
     description: '',
@@ -33,13 +29,6 @@ class NewTrip extends Component {
     activities: [],
     // trips: [],
   };
-
-  componentDidMount() {
-    const { trips } = this.props;
-    ValidatorForm.addValidationRule('isTitleUnique', value =>
-      trips.every(({ title }) => title.toLowerCase() !== value.toLowerCase())
-    );
-  }
 
   handleDrawerOpen = () => this.setState({ open: true });
 
@@ -78,9 +67,9 @@ class NewTrip extends Component {
     // await this.setTrips();
   };
 
-  handleSave = () => {
+  handleSave = title => {
     const { saveTrip, history } = this.props;
-    const { activities, title } = this.state;
+    const { activities } = this.state;
     const newTripName = title;
     const newTrip = {
       id: newTripName.toLowerCase().replace(/ /g, '-'),
@@ -107,10 +96,9 @@ class NewTrip extends Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, trips } = this.props;
     const {
       open,
-      title,
       // coverKeyword,
       time,
       description,
@@ -120,44 +108,13 @@ class NewTrip extends Component {
     } = this.state;
     return (
       <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          className={classNames(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
-        >
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={this.handleDrawerOpen}
-              edge="start"
-              className={classNames(classes.menuButton, open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap>
-              Create New Trip
-            </Typography>
-            <ValidatorForm autoComplete="off" onSubmit={this.handleSave}>
-              <TextValidator
-                id="outlined-title"
-                label="Trip Title"
-                name="title"
-                value={title}
-                onChange={this.handleChange}
-                margin="normal"
-                variant="outlined"
-                validators={['required', 'isTitleUnique']}
-                errorMessages={['this field is required', 'Title already used']}
-              />
-              <Button variant="contained" color="secondary" type="submit">
-                Save
-              </Button>
-            </ValidatorForm>
-          </Toolbar>
-        </AppBar>
+        <NewTripNav
+          open={open}
+          classes={classes}
+          trips={trips}
+          handleDrawerOpen={this.handleDrawerOpen}
+          handleSave={this.handleSave}
+        />
         <Drawer
           className={classes.drawer}
           variant="persistent"

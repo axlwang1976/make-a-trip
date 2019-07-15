@@ -5,7 +5,7 @@ import DraggableActivity from './DraggableActivity';
 
 const DraggableActivityList = SortableContainer(
   ({ activities, deleteActivity }) => (
-    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+    <div style={{ width: '25%', display: 'flex', flexWrap: 'wrap' }}>
       {activities.map((activity, i) => (
         <DraggableActivity
           {...activity}
