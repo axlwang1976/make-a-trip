@@ -9,24 +9,19 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import NewTripModal from './NewTripModal.js';
 import styles from '../styles/NewTripNav.module.scss';
 
 class NewTripNav extends Component {
-  state = { title: '' };
+  state = { isModalShow: false };
 
-  componentDidMount() {
-    const { trips } = this.props;
-    ValidatorForm.addValidationRule('isTitleUnique', value =>
-      trips.every(({ title }) => title.toLowerCase() !== value.toLowerCase())
-    );
-  }
+  showModal = () => this.setState({ isModalShow: true });
 
-  handleChange = e => this.setState({ [e.target.name]: e.target.value });
+  hideModal = () => this.setState({ isModalShow: false });
 
   render() {
-    const { classes, open, handleDrawerOpen, handleSave } = this.props;
-    const { title } = this.state;
+    const { classes, open, handleDrawerOpen, handleSave, trips } = this.props;
+    const { isModalShow } = this.state;
     return (
       <div className={styles.root}>
         <CssBaseline />
@@ -51,28 +46,24 @@ class NewTripNav extends Component {
             </Typography>
           </Toolbar>
           <div className={styles.navBtns}>
-            <ValidatorForm
-              autoComplete="off"
-              onSubmit={() => handleSave(title)}
-            >
-              <TextValidator
-                id="outlined-title"
-                label="Trip Title"
-                name="title"
-                value={title}
-                onChange={this.handleChange}
-                margin="normal"
-                variant="outlined"
-                validators={['required', 'isTitleUnique']}
-                errorMessages={['this field is required', 'Title already used']}
-              />
-              <Button variant="contained" color="secondary" type="submit">
-                Save
-              </Button>
-            </ValidatorForm>
-            <Button variant="contained">
+            <Button variant="contained" className={styles.button}>
               <Link to="/">Back</Link>
             </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={this.showModal}
+              className={styles.button}
+            >
+              Save
+            </Button>
+            {isModalShow && (
+              <NewTripModal
+                handleSave={handleSave}
+                trips={trips}
+                hideModal={this.hideModal}
+              />
+            )}
           </div>
         </AppBar>
       </div>

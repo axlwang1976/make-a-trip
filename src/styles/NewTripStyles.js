@@ -12,6 +12,7 @@ export const styles = theme => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
     height: '64px',
+    alignItems: 'center',
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
