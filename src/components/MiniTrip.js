@@ -5,16 +5,10 @@ import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import styles from '../styles/MiniTrip.module.scss';
 
-export default function MiniTrip({
-  id,
-  title,
-  coverImg,
-  goToTrip,
-  deleteTrip,
-}) {
+export default function MiniTrip({ id, title, coverImg, goToTrip, openModal }) {
   const handleClick = e => {
     e.stopPropagation();
-    deleteTrip(id);
+    openModal(id);
   };
   return (
     <Paper className={styles.MiniTrip} onClick={() => goToTrip(id)}>
@@ -38,5 +32,5 @@ MiniTrip.propTypes = {
   title: PropTypes.string,
   coverImg: PropTypes.string,
   goToTrip: PropTypes.func,
-  deleteTrip: PropTypes.func,
+  openModal: PropTypes.func,
 };
