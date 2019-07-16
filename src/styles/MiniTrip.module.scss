@@ -3,9 +3,12 @@
   border-radius: 5px;
   padding: 0.5rem;
   position: relative;
+  cursor: pointer;
 
   &:hover {
-    cursor: pointer;
+    & .deleteIcon {
+      opacity: 1;
+    }
   }
 
   &Title {
@@ -29,8 +32,7 @@
   top: 0.5rem;
   color: #111;
   font-size: 2rem;
-  transition: transform 0.2s;
-  cursor: pointer;
+  opacity: 0;
 
   &:hover {
     transform: scale(1.3);

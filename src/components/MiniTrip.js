@@ -18,7 +18,11 @@ export default function MiniTrip({
   };
   return (
     <Paper className={styles.MiniTrip} onClick={() => goToTrip(id)}>
-      <DeleteIcon className={styles.deleteIcon} onClick={handleClick} />
+      <DeleteIcon
+        className={styles.deleteIcon}
+        onClick={handleClick}
+        style={{ transition: 'all 0.2s' }}
+      />
       <Typography variant="h5" gutterBottom className={styles.MiniTripTitle}>
         {title}
       </Typography>
