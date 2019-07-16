@@ -6,7 +6,7 @@ import NewTrip from './NewTrip';
 import initData from '../initData';
 
 export default class App extends Component {
-  state = { trips: initData };
+  state = { trips: JSON.parse(localStorage.getItem('trips')) || initData };
 
   findTrip = id => {
     const { trips } = this.state;
@@ -15,7 +15,18 @@ export default class App extends Component {
 
   saveTrip = newTrip => {
     const { trips } = this.state;
-    this.setState({ trips: [...trips, newTrip] });
+    this.setState({ trips: [...trips, newTrip] }, this.syncLocalStorage);
+  };
+
+  deleteTrip = id => {
+    const { trips } = this.state;
+    const newTrips = trips.filter(trip => trip.id !== id);
+    this.setState({ trips: newTrips }, this.syncLocalStorage);
+  };
+
+  syncLocalStorage = () => {
+    const { trips } = this.state;
+    localStorage.setItem('trips', JSON.stringify(trips));
   };
 
   render() {
@@ -25,7 +36,13 @@ export default class App extends Component {
         <Route
           exact
           path="/"
-          render={routeProps => <TripList trips={trips} {...routeProps} />}
+          render={routeProps => (
+            <TripList
+              trips={trips}
+              {...routeProps}
+              deleteTrip={this.deleteTrip}
+            />
+          )}
         />
         <Route
           exact

@@ -2,6 +2,7 @@
   border: 1px solid #000;
   border-radius: 5px;
   padding: 0.5rem;
+  position: relative;
 
   &:hover {
     cursor: pointer;
@@ -19,5 +20,19 @@
       max-width: 100%;
       border-radius: 5px;
     }
+  }
+}
+
+.deleteIcon {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  color: #111;
+  font-size: 2rem;
+  transition: transform 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.3);
   }
 }

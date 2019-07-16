@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import MiniTrip from './MiniTrip';
 import styles from '../styles/TripList.module.scss';
 
-export default function TripList({ trips, history }) {
+export default function TripList({ trips, history, deleteTrip }) {
   const goToTrip = id => history.push(`/trip/${id}`);
   return (
     <div className={styles.TripList}>
@@ -19,7 +19,12 @@ export default function TripList({ trips, history }) {
         </nav>
         <div className={styles.trips}>
           {trips.map(trip => (
-            <MiniTrip {...trip} key={trip.id} goToTrip={goToTrip} />
+            <MiniTrip
+              {...trip}
+              key={trip.id}
+              goToTrip={goToTrip}
+              deleteTrip={deleteTrip}
+            />
           ))}
         </div>
       </div>
@@ -30,4 +35,5 @@ export default function TripList({ trips, history }) {
 TripList.propTypes = {
   trips: PropTypes.array,
   history: PropTypes.object,
+  deleteTrip: PropTypes.func,
 };
