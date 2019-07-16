@@ -2,7 +2,23 @@
   opacity: 1;
 }
 
+.fade-enter {
+  opacity: 0;
+}
+
 .fade-exit-active {
   opacity: 0;
   transition: opacity 0.5s !important;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 0.5s !important;
+}
+
+.page {
+  height: 100vh;
+  position: fixed;
+  width: 100%;
+  top: 0;
 }
