@@ -47,13 +47,22 @@ export default function TripList({ trips, history, deleteTrip }) {
             <Link to="/trip/new">Create Trip</Link>
           </Button>
         </nav>
-        <TransitionGroup className={styles.trips}>
-          {trips.map(trip => (
-            <CSSTransition key={trip.id} classNames="fade" timeout={500}>
-              <MiniTrip {...trip} goToTrip={goToTrip} openModal={openModal} />
-            </CSSTransition>
-          ))}
-        </TransitionGroup>
+        {trips.length === 0 ? (
+          <Typography
+            variant="h3"
+            style={{ margin: '10rem auto', color: 'white' }}
+          >
+            Add Your Fist Trip
+          </Typography>
+        ) : (
+          <TransitionGroup className={styles.trips}>
+            {trips.map(trip => (
+              <CSSTransition key={trip.id} classNames="fade" timeout={500}>
+                <MiniTrip {...trip} goToTrip={goToTrip} openModal={openModal} />
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
+        )}
       </div>
       <Dialog
         open={open}

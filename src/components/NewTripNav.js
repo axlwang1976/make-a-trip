@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
@@ -12,63 +12,61 @@ import Button from '@material-ui/core/Button';
 import NewTripModal from './NewTripModal.js';
 import styles from '../styles/NewTripNav.module.scss';
 
-class NewTripNav extends Component {
-  state = { isModalShow: false };
+function NewTripNav(props) {
+  const [isModalShow, setIsModalShow] = useState(false);
 
-  showModal = () => this.setState({ isModalShow: true });
+  const showModal = () => setIsModalShow(true);
 
-  hideModal = () => this.setState({ isModalShow: false });
+  const hideModal = () => setIsModalShow(false);
 
-  render() {
-    const { classes, open, handleDrawerOpen, handleSave, trips } = this.props;
-    const { isModalShow } = this.state;
-    return (
-      <div className={styles.root}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          className={classNames(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
-        >
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={() => handleDrawerOpen()}
-              edge="start"
-              className={classNames(classes.menuButton, open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap>
-              Create New Trip
-            </Typography>
-          </Toolbar>
-          <div className={styles.navBtns}>
-            <Button variant="contained" className={styles.button}>
-              <Link to="/">Back</Link>
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={this.showModal}
-              className={styles.button}
-            >
-              Save
-            </Button>
-            {isModalShow && (
-              <NewTripModal
-                handleSave={handleSave}
-                trips={trips}
-                hideModal={this.hideModal}
-              />
-            )}
-          </div>
-        </AppBar>
-      </div>
-    );
-  }
+  const { classes, open, handleDrawerOpen, handleSave, trips } = props;
+
+  return (
+    <div className={styles.root}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={classNames(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="Open drawer"
+            onClick={() => handleDrawerOpen()}
+            edge="start"
+            className={classNames(classes.menuButton, open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+            Create New Trip
+          </Typography>
+        </Toolbar>
+        <div className={styles.navBtns}>
+          <Button variant="contained" className={styles.button}>
+            <Link to="/">Back</Link>
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={showModal}
+            className={styles.button}
+          >
+            Save
+          </Button>
+          {isModalShow && (
+            <NewTripModal
+              handleSave={handleSave}
+              trips={trips}
+              hideModal={hideModal}
+            />
+          )}
+        </div>
+      </AppBar>
+    </div>
+  );
 }
 
 NewTripNav.propTypes = {

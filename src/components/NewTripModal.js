@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -7,66 +7,57 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import Button from '@material-ui/core/Button';
+import useInput from '../hooks/useInput';
 
-export default class NewTripModal extends Component {
-  static defaultProps = { open: true };
+export default function NewTripModal(props) {
+  const open = true;
 
-  state = { title: '' };
+  const [curTitle, updateCurTitle] = useInput('');
 
-  componentDidMount() {
-    const { trips } = this.props;
+  useEffect(() => {
+    const { trips } = props;
     ValidatorForm.addValidationRule('isTitleUnique', value =>
       trips.every(({ title }) => title.toLowerCase() !== value.toLowerCase())
     );
-  }
+  }, [curTitle, props]);
 
-  handleChange = e => this.setState({ [e.target.name]: e.target.value });
+  const { handleSave, hideModal } = props;
 
-  render() {
-    const { title } = this.state;
-    const { open, handleSave, hideModal } = this.props;
-    return (
-      <Dialog
-        open={open}
-        onClose={hideModal}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">New Trip Name</DialogTitle>
-        <ValidatorForm autoComplete="off" onSubmit={() => handleSave(title)}>
-          <DialogContent>
-            <DialogContentText>
-              Enter your new trip name. Make sure it's unique.
-            </DialogContentText>
-            <TextValidator
-              id="outlined-title"
-              label="Trip Title"
-              name="title"
-              value={title}
-              onChange={this.handleChange}
-              margin="normal"
-              variant="outlined"
-              fullWidth
-              validators={['required', 'isTitleUnique']}
-              errorMessages={['this field is required', 'Title already used']}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={hideModal} color="primary">
-              Cancel
-            </Button>
-            <Button variant="contained" color="secondary" type="submit">
-              Save
-            </Button>
-          </DialogActions>
-        </ValidatorForm>
-      </Dialog>
-    );
-  }
+  return (
+    <Dialog open={open} onClose={hideModal} aria-labelledby="form-dialog-title">
+      <DialogTitle id="form-dialog-title">New Trip Name</DialogTitle>
+      <ValidatorForm autoComplete="off" onSubmit={() => handleSave(curTitle)}>
+        <DialogContent>
+          <DialogContentText>
+            Enter your new trip name. Make sure it's unique.
+          </DialogContentText>
+          <TextValidator
+            id="outlined-title"
+            label="Trip Title"
+            name="title"
+            value={curTitle}
+            onChange={updateCurTitle}
+            margin="normal"
+            variant="outlined"
+            fullWidth
+            validators={['required', 'isTitleUnique']}
+            errorMessages={['this field is required', 'Title already used']}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={hideModal} color="primary">
+            Cancel
+          </Button>
+          <Button variant="contained" color="secondary" type="submit">
+            Save
+          </Button>
+        </DialogActions>
+      </ValidatorForm>
+    </Dialog>
+  );
 }
 
 NewTripModal.propTypes = {
-  trips: PropTypes.array,
   handleSave: PropTypes.func,
   hideModal: PropTypes.func,
-  open: PropTypes.bool,
 };

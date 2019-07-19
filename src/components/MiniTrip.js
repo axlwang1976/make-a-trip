@@ -10,6 +10,7 @@ export default function MiniTrip({ id, title, coverImg, goToTrip, openModal }) {
     e.stopPropagation();
     openModal(id);
   };
+
   return (
     <Paper className={styles.MiniTrip} onClick={() => goToTrip(id)}>
       <DeleteIcon
