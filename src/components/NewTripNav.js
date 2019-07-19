@@ -19,7 +19,14 @@ function NewTripNav(props) {
 
   const hideModal = () => setIsModalShow(false);
 
-  const { classes, open, handleDrawerOpen, handleSave, trips } = props;
+  const {
+    classes,
+    open,
+    handleDrawerOpen,
+    handleSave,
+    trips,
+    activities,
+  } = props;
 
   return (
     <div className={styles.root}>
@@ -53,6 +60,7 @@ function NewTripNav(props) {
             color="secondary"
             onClick={showModal}
             className={styles.button}
+            disabled={activities.length === 0}
           >
             Save
           </Button>
@@ -75,6 +83,7 @@ NewTripNav.propTypes = {
   trips: PropTypes.array,
   handleDrawerOpen: PropTypes.func,
   handleSave: PropTypes.func,
+  activities: PropTypes.array,
 };
 
 export default NewTripNav;

@@ -67,6 +67,7 @@ function NewTrip({ saveTrip, history, classes, theme, trips }) {
         trips={trips}
         handleDrawerOpen={handleDrawerOpen}
         handleSave={handleSave}
+        activities={activities}
       />
       <Drawer
         className={classes.drawer}
